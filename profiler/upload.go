@@ -27,6 +27,8 @@ var errOldAgent = errors.New("Datadog Agent is not accepting profiles. Agent-bas
 
 // upload tries to upload a batch of profiles. It has retry and backoff mechanisms.
 func (p *profiler) upload(bat batch) error {
+	fmt.Println("upload")
+
 	statsd := p.cfg.statsd
 	var err error
 	for i := 0; i < maxRetries; i++ {

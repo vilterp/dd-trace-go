@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"runtime"
 	"runtime/pprof"
 	"time"
@@ -77,15 +78,16 @@ var profileTypes = map[ProfileType]profileType{
 	CPUProfile: {
 		Name:     "cpu",
 		Filename: "cpu.pprof",
-		Collect: func(_ profileType, p *profiler) ([]byte, error) {
-			var buf bytes.Buffer
-			if err := startCPUProfile(&buf); err != nil {
-				return nil, err
-			}
-			p.interruptibleSleep(p.cfg.cpuDuration)
-			stopCPUProfile()
-			return buf.Bytes(), nil
-		},
+		// Collect: func(_ profileType, p *profiler) ([]byte, error) {
+		// 	var buf bytes.Buffer
+		// 	if err := startCPUProfile(&buf); err != nil {
+		// 		return nil, err
+		// 	}
+		// 	p.interruptibleSleep(p.cfg.cpuDuration)
+		// 	stopCPUProfile()
+		// 	return buf.Bytes(), nil
+		// },
+		Collect: openJuliaProfile,
 	},
 	// HeapProfile is complex due to how the Go runtime exposes it. It contains 4
 	// sample types alloc_objects/count, alloc_space/bytes, inuse_objects/count,
@@ -147,6 +149,17 @@ var profileTypes = map[ProfileType]profileType{
 			return buf.Bytes(), err
 		},
 	},
+}
+
+func openJuliaProfile(t profileType, _ *profiler) ([]byte, error) {
+	path := "/Users/vilterp/code/DatadogProfileUploader.jl/julia-profile-2.pb.gz"
+	data, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Println("error:", err)
+		return nil, err
+	}
+	fmt.Println("opened file", path)
+	return data, nil
 }
 
 func collectGenericProfile(t profileType, _ *profiler) ([]byte, error) {
