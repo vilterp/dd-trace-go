@@ -157,7 +157,7 @@ func openJuliaProfile(t profileType, _ *profiler) ([]byte, error) {
 		return nil, err
 	}
 	fmt.Println("pwd", wd)
-	path := "cpu-julia.pb.gz"
+	path := "cpu-julia-2.pb"
 	data, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Println("error:", err)
