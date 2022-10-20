@@ -152,13 +152,18 @@ var profileTypes = map[ProfileType]profileType{
 }
 
 func openJuliaProfile(t profileType, _ *profiler) ([]byte, error) {
-	path := "test/cpu.pb.gz"
+	wd, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println("pwd", wd)
+	path := "cpu-julia.pb.gz"
 	data, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Println("error:", err)
 		return nil, err
 	}
-	fmt.Println("opened file", path)
+	fmt.Println("read file", path)
 	return data, nil
 }
 
