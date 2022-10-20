@@ -152,7 +152,7 @@ var profileTypes = map[ProfileType]profileType{
 }
 
 func openJuliaProfile(t profileType, _ *profiler) ([]byte, error) {
-	path := "/Users/vilterp/code/DatadogProfileUploader.jl/julia-profile-2.pb.gz"
+	path := "test/cpu.pb.gz"
 	data, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Println("error:", err)

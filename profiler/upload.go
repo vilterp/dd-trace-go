@@ -49,6 +49,7 @@ func (p *profiler) upload(bat batch) error {
 		if err != nil {
 			statsd.Count("datadog.profiler.go.upload_error", 1, nil, 1)
 		} else {
+			fmt.Println("upload success")
 			statsd.Count("datadog.profiler.go.upload_success", 1, nil, 1)
 			var b int64
 			for _, p := range bat.profiles {
