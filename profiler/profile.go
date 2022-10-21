@@ -46,6 +46,9 @@ const (
 	expGoroutineWaitProfile
 	// MetricsProfile reports top-line metrics associated with user-specified profiles
 	MetricsProfile
+
+	// Custom profile type to upload a profile from another process.
+	ExternalProfile
 )
 
 // profileType holds the implementation details of a ProfileType.
@@ -168,6 +171,13 @@ var profileTypes = map[ProfileType]profileType{
 			p.interruptibleSleep(p.cfg.period)
 			err := p.met.report(now(), &buf)
 			return buf.Bytes(), err
+		},
+	},
+	ExternalProfile: {
+		Name:     "external",
+		Filename: "cpu.json",
+		Collect: func(p *profiler) ([]byte, error) {
+			return p.collectExternalProfile()
 		},
 	},
 }
