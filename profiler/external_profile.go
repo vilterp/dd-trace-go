@@ -21,14 +21,14 @@ func (p *profiler) collectExternalCPUProfile() ([]byte, error) {
 }
 
 func (p *profiler) collectExternalAllocProfile() ([]byte, error) {
-	log.Info("requesting profile")
+	log.Info("requesting alloc profile")
 	// TODO: make URL configurable
-	resp, err := http.Get("http://localhost:19465/allocs_profile")
+	resp, err := http.Get("http://localhost:19465/allocs_profile?duration=10&sample_rate=0.00001")
 	if err != nil {
 		return nil, err
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
-	log.Info("got Alloc profile. err:", err)
+	log.Info("got alloc profile. err:", err)
 	return body, err
 }
