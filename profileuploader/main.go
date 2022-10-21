@@ -8,7 +8,11 @@ import (
 )
 
 func main() {
-	err := profiler.Start(profiler.WithProfileTypes(profiler.ExternalProfile))
+	err := profiler.Start(
+		profiler.WithProfileTypes(profiler.ExternalProfile),
+		profiler.WithService("rai-server"),
+		profiler.WithEnv("laptop"), // TODO: make configurable
+	)
 	defer profiler.Stop()
 
 	if err != nil {
