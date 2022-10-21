@@ -9,7 +9,10 @@ import (
 
 func main() {
 	err := profiler.Start(
-		profiler.WithProfileTypes(profiler.ExternalProfile),
+		profiler.WithProfileTypes(
+			profiler.ExternalCPUProfile,
+			profiler.ExternalAllocationProfile,
+		),
 		profiler.WithService("rai-server"),
 		profiler.WithEnv("laptop"), // TODO: make configurable
 	)

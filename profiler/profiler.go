@@ -365,7 +365,8 @@ func (p *profiler) enabledProfileTypes() []ProfileType {
 		GoroutineProfile,
 		expGoroutineWaitProfile,
 		MetricsProfile,
-		ExternalProfile,
+		ExternalCPUProfile,
+		ExternalAllocationProfile,
 	}
 	enabled := []ProfileType{}
 	for _, t := range order {

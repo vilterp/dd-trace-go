@@ -47,8 +47,11 @@ const (
 	// MetricsProfile reports top-line metrics associated with user-specified profiles
 	MetricsProfile
 
-	// Custom profile type to upload a profile from another process.
-	ExternalProfile
+	// Upload a CPU profile from another process.
+	ExternalCPUProfile
+
+	// Upload an allocation profile from another process.
+	ExternalAllocationProfile
 )
 
 // profileType holds the implementation details of a ProfileType.
@@ -173,11 +176,18 @@ var profileTypes = map[ProfileType]profileType{
 			return buf.Bytes(), err
 		},
 	},
-	ExternalProfile: {
-		Name:     "external",
+	ExternalCPUProfile: {
+		Name:     "external-cpu",
 		Filename: "cpu.pprof",
 		Collect: func(p *profiler) ([]byte, error) {
-			return p.collectExternalProfile()
+			return p.collectExternalCPUProfile()
+		},
+	},
+	ExternalAllocationProfile: {
+		Name:     "external-allocation",
+		Filename: "heap.pprof",
+		Collect: func(p *profiler) ([]byte, error) {
+			return p.collectExternalAllocProfile()
 		},
 	},
 }
