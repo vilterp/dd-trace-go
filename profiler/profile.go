@@ -175,7 +175,7 @@ var profileTypes = map[ProfileType]profileType{
 	},
 	ExternalProfile: {
 		Name:     "external",
-		Filename: "cpu.json",
+		Filename: "cpu.pprof",
 		Collect: func(p *profiler) ([]byte, error) {
 			return p.collectExternalProfile()
 		},
