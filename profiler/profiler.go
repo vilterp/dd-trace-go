@@ -367,6 +367,7 @@ func (p *profiler) enabledProfileTypes() []ProfileType {
 		MetricsProfile,
 		ExternalCPUProfile,
 		ExternalAllocationProfile,
+		ExternalTypeInferenceProfile,
 	}
 	enabled := []ProfileType{}
 	for _, t := range order {

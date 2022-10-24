@@ -52,6 +52,9 @@ const (
 
 	// Upload an allocation profile from another process.
 	ExternalAllocationProfile
+
+	// Upload a type inference profile from another process.
+	ExternalTypeInferenceProfile
 )
 
 // profileType holds the implementation details of a ProfileType.
@@ -188,6 +191,13 @@ var profileTypes = map[ProfileType]profileType{
 		Filename: "heap.pprof",
 		Collect: func(p *profiler) ([]byte, error) {
 			return p.collectExternalAllocProfile()
+		},
+	},
+	ExternalTypeInferenceProfile: {
+		Name:     "external-type-inference",
+		Filename: "cpu.pprof", // collides with other CPU profile
+		Collect: func(p *profiler) ([]byte, error) {
+			return p.collectExternalTypeInferenceProfile()
 		},
 	},
 }
